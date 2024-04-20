@@ -7,11 +7,7 @@ from grasshopper.state import GlobalState
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 
 def login() -> rx.Component:
-    return rx.cond(
-                GlobalState.auth_session,
-                rx.heading(f"Welcome back {GlobalState.user.name}"),
-                GoogleOAuthProvider.create(
-                    GoogleLogin.create(on_success=GlobalState.on_success),
-                    client_id=GOOGLE_CLIENT_ID,
-                ),
-            ),
+    return GoogleOAuthProvider.create(
+        GoogleLogin.create(on_success=GlobalState.on_success),
+        client_id=GOOGLE_CLIENT_ID,
+    )
