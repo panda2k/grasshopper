@@ -24,8 +24,12 @@ import functools
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 
 
-########## DYNAMIC ROUTES #############    
-
+########## DYNAMIC ROUTES #############
+class State(rx.State):
+    """The app state."""
+    @rx.var
+    def user_id(self) -> str:
+        return self.router.page.params.get("userID", "no userID")
 
 
 # @rx.page(route="/post/[userID]")
@@ -33,7 +37,13 @@ GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 #     """A page that updates based on the route."""
 #     return rx.heading(GlobalState.user_id)
 
-app = rx.App()
+app = rx.App(
+    theme=rx.theme(
+        appearance="light",
+        accent_color="lime",
+        radius="small"
+    )
+)
 app.add_page(index, route="/",title="Grasshopper")
 app.add_page(profile, route="/profile",title="Profile")
 app.add_page(uniquePage, route="/uniquePage",title="Profile")
