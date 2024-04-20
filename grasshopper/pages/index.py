@@ -3,14 +3,20 @@
 import reflex as rx
 from grasshopper.template import navbar, template
 
+from grasshopper.react_google_auth import GoogleLogin, GoogleOAuthProvider
+from grasshopper.state import GlobalState
+from grasshopper.template import template
+import os
+from dotenv import load_dotenv
+
 # def eventCard(imageSrc, title, description, author, school):
 def eventCard():
     return rx.box(
                 (rx.box(
                 rx.image(src="https://via.placeholder.com/200x150",                style={
-                    "height": "160px", 
-                    "width": "100%", 
-                    "object-fit": "cover",  
+                    "height": "160px",
+                    "width": "100%",
+                    "object-fit": "cover",
                     "object-position": "center",
                 },
 ),
@@ -38,15 +44,26 @@ def eventCard():
             as_child=True,
         ))
     , border_radius="10px",
-    style={"width":"100%", "padding":"10px", "margin":"10px", "box-shadow":"0 4px 8px 0 rgba(0,0,0,0.2)"})
+    style={"width":"100%", "padding":"10px", "margin":"10px", "box-shadow": "0 4px 8px 0 rgba(0,0,0,0.2)"})
 
 
+load_dotenv()
+
+GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 
 
 @template
 def index() -> rx.Component:
     return rx.center(
         rx.vstack(
+            rx.cond(
+                GlobalState.auth_session,
+                rx.heading(f"Welcome back {GlobalState.auth_session.user_id}"),
+                GoogleOAuthProvider.create(
+                    GoogleLogin.create(on_success=GlobalState.on_success),
+                    client_id=GOOGLE_CLIENT_ID,
+                ),
+            ),
             rx.heading("Feed!", size="9"),
             eventCard(),
             eventCard(),

@@ -3,9 +3,12 @@ import uuid
 from sqlmodel import Field
 from datetime import datetime, timezone
 
+def create_id():
+    return str(uuid.uuid4())
+
 class Event(rx.Model, table=True):
     id: str = Field(
-        default=uuid.uuid4,
+        default_factory=create_id,
         primary_key=True,
         nullable=False,
     )
@@ -17,7 +20,7 @@ class Event(rx.Model, table=True):
 
 class School(rx.Model, table=True):
     id: str = Field(
-        default=uuid.uuid4,
+        default_factory=create_id,
         primary_key=True,
         nullable=False,
     )
@@ -25,16 +28,17 @@ class School(rx.Model, table=True):
 
 class User(rx.Model, table=True):
     id: str = Field(
-        default=uuid.uuid4,
+        default_factory=create_id,
         primary_key=True,
         nullable=False,
     )
     email: str
+    name: str
     image: str | None = Field(default=None)
 
 class Block(rx.Model, table=True):
     id: str = Field(
-        default=uuid.uuid4,
+        default_factory=create_id,
         primary_key=True,
         nullable=False,
     )
@@ -43,7 +47,7 @@ class Block(rx.Model, table=True):
 
 class UserBlock(rx.Model, table=True):
     id: str = Field(
-        default=uuid.uuid4,
+        default_factory=create_id,
         primary_key=True,
         nullable=False,
     )
@@ -54,10 +58,9 @@ class UserBlock(rx.Model, table=True):
 
 class AuthenticationSession(rx.Model, table=True):
     id: str = Field(
-        default=uuid.uuid4,
+        default_factory=create_id,
         primary_key=True,
         nullable=False,
     )
     user_id: str = Field(foreign_key="user.id")
-    refresh_token: str
 
