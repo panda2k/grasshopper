@@ -15,12 +15,16 @@ def profile():
         ),
         rx.divider(),
         rx.container(
-            rx.center(  # idk how to vertically center
-                rx.image(src="/profile-blocks.png", width="5em")
+            rx.center(
+                rx.center(
+                    rx.image(src="/profile-blocks.png", width="5em")
+                ),
+                background="#f1f1f1",
+                width="100%",
+                height="300px",
             ),
-            background="#f1f1f1",
-            width="100%",
-            height="300px",
+            align="center",
+            justify="center"
         ),
         rx.divider(),
         rx.container(

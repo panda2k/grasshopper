@@ -97,9 +97,11 @@ export default function Component() {
 </RadixThemesBox>
 </RadixThemesFlex>
   <RadixThemesSeparator size={`4`}/>
-  <RadixThemesContainer css={{"background": "#f1f1f1", "width": "100%", "height": "300px"}}>
+  <RadixThemesContainer css={{"align": "center", "justify": "center"}}>
+  <RadixThemesFlex css={{"background": "#f1f1f1", "width": "100%", "height": "300px", "display": "flex", "alignItems": "center", "justifyContent": "center"}}>
   <RadixThemesFlex css={{"display": "flex", "alignItems": "center", "justifyContent": "center"}}>
   <img css={{"width": "5em"}} src={`/profile-blocks.png`}/>
+</RadixThemesFlex>
 </RadixThemesFlex>
 </RadixThemesContainer>
   <RadixThemesSeparator size={`4`}/>

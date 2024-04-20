@@ -52,18 +52,6 @@ export function Fragment_6499b51736be44284c15de43340cb16c () {
   )
 }
 
-export function Heading_ef3fa9ef93f82b9e9cde956a03da2492 () {
-  const state__state = useContext(StateContexts.state__state)
-
-
-
-  return (
-    <RadixThemesHeading>
-  {state__state.user_id}
-</RadixThemesHeading>
-  )
-}
-
 export function Fragment_cb5edf864ed730e6ef1545318d0da5a2 () {
   const [addEvents, connectErrors] = useContext(EventLoopContext);
 
@@ -79,6 +67,18 @@ export function Fragment_cb5edf864ed730e6ef1545318d0da5a2 () {
   <Fragment/>
 )}
 </Fragment>
+  )
+}
+
+export function Heading_ef3fa9ef93f82b9e9cde956a03da2492 () {
+  const state__state = useContext(StateContexts.state__state)
+
+
+
+  return (
+    <RadixThemesHeading>
+  {state__state.user_id}
+</RadixThemesHeading>
   )
 }
 
