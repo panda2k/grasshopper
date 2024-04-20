@@ -5,8 +5,8 @@ from reflex.components.radix import themes as rx
 THEME = rx.theme(
     appearance="light",
     has_background=True,
-    radius="large",
-    accent_color="iris",
+    radius="small",
+    accent_color="lime",
     scaling="100%",
     panel_background="solid",
 )
