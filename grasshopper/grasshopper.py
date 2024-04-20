@@ -32,5 +32,5 @@ def user():
 
 app = rx.App()
 app.add_page(index, route="/",title="My Beautiful App")
-app.add_page(profile, route="/",title="Profile")
+app.add_page(profile, route="/profile",title="Profile")
 
