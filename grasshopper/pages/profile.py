@@ -1,16 +1,12 @@
 import reflex as rx
 
-from dashboard.navigation import navbar
-from dashboard.template import template
-
 @template
-def profile() -> rx.Component:
-    return rx.box(
-            navbar(heading="Tools"),
-            rx.box(
-                rx.text("placeholder"),
-                margin_top="calc(50px + 2em)",
-                padding="2em",
-            ),
-            padding_left="250px",
-        )
+def profile():
+    return rx.center(
+        rx.heading("Profile", size="9"),
+        rx.text("Please enter your name"),
+        rx.input(placeholder="Name"),
+        align="center",
+        spacing="7",
+        font_size="2em",
+    )
