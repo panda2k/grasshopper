@@ -32,10 +32,9 @@ def eventCard():
                                     size="2",
                                     trim="both",
                                 ),
-                                rx.text(),
                                 type="always",
                                 scrollbars="vertical",
-                                # style={"height": "150px"},
+                                style={"height": "2%"},
                         ),
                     ),
                     spacing="3",
@@ -44,7 +43,7 @@ def eventCard():
             as_child=True,
         ))
     , border_radius="10px",
-    style={"width":"100%", "padding":"10px", "margin":"10px", "box-shadow": "0 4px 8px 0 rgba(0,0,0,0.2)"})
+    style={"width":"100%", "padding":"14px", "margin":"10px", "box-shadow":"0 4px 8px 0 rgba(0,0,0,0.2)"})
 
 
 load_dotenv()
@@ -70,8 +69,8 @@ def index() -> rx.Component:
             eventCard(),
             eventCard(),
             align="center",
-            spacing="7",
+            spacing="2",
             font_size="2em",
         ),
-        height="100vh",
+        # height="100vh",
     )
