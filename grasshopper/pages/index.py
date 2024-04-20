@@ -14,15 +14,17 @@ def eventCard():
     return rx.box(
                 (rx.box(
                 rx.image(src="https://via.placeholder.com/200x150",                style={
-                    "height": "160px",
+                    "height": "70%",
                     "width": "100%",
                     "object-fit": "cover",
                     "object-position": "center",
+                    "border-radius": "10px",
+                    "margin-bottom": "14px",
                 },
 ),
                 rx.flex(
                     rx.box(
-                        rx.heading("ACM Kickoff", as_="h1",size="5"),
+                        rx.heading("ACM Kickoff", as_="h1",trim="normal",size="5"),
                         rx.text("ACM @ UCSD", weight="medium", trim="normal",size="4"),
                         rx.text("UC San Diego", weight="light", trim="normal",size="3",style={"margin-bottom":'10px'}),
                         rx.scroll_area(
@@ -34,10 +36,11 @@ def eventCard():
                                 ),
                                 type="always",
                                 scrollbars="vertical",
-                                style={"height": "2%"},
+                                style={"height": 40},
                         ),
                     ),
-                    spacing="3",
+                    spacing="2",
+                    height="100%",
                 ),
             ),
             as_child=True,
@@ -63,7 +66,7 @@ def index() -> rx.Component:
                     client_id=GOOGLE_CLIENT_ID,
                 ),
             ),
-            rx.heading("Feed!", size="9"),
+            rx.heading("Your events", size="6"),
             eventCard(),
             eventCard(),
             eventCard(),

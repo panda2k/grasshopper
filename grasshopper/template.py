@@ -13,7 +13,7 @@ def navbar() -> rx.Component:
         rx.flex(
             rx.link(rx.icon("home"), href="/",color="white"),
             rx.link(rx.icon("calendar-clock"), href="/itinerary",color="white"),
-            rx.link(rx.icon("scan-eye"), href="/scan",color="white"),
+            rx.link(rx.icon("circle-plus"), href="/createevent",color="white"),
             rx.link(rx.icon("circle-user"), href="/profile",color="white"),
             spacing="3",
             justify="center",
