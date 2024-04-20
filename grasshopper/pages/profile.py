@@ -1,7 +1,9 @@
 import reflex as rx
 from grasshopper.template import template
+from grasshopper.require_login import require_google_login
 
 @template
+@require_google_login
 def profile():
     return rx.flex(
         rx.image(src="/profilepic.png", width="3em", padding="15px"),

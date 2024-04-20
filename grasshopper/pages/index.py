@@ -1,33 +1,13 @@
 """The main index page."""
 
-import functools
 import reflex as rx
-from grasshopper.login import login
-from grasshopper.template import navbar, template
+from grasshopper.template import template
 
 from grasshopper.react_google_auth import GoogleLogin, GoogleOAuthProvider
 from grasshopper.state import GlobalState
 from grasshopper.template import template
 import os
 from dotenv import load_dotenv
-
-# def require_google_login(page) -> rx.Component:
-#     @functools.wraps(page)
-#     def _auth_wrapper() -> rx.Component:
-#         return GoogleOAuthProvider.create(
-#             rx.cond(
-#                 GlobalState.is_hydrated,
-#                 rx.cond(
-#                     GlobalState.is_authenticated, 
-#                     page(), 
-#                     login(),
-#                 ),
-#                 rx.box(rx.text("Loading...")),
-#             ),
-#             client_id=GOOGLE_CLIENT_ID,
-#         )
-
-#     return _auth_wrapper
 
 # def eventCard(imageSrc, title, description, author, school):
 def eventCard():
@@ -79,15 +59,7 @@ GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 def index() -> rx.Component:
     return rx.center(
         rx.vstack(
-            rx.cond(
-                GlobalState.token_is_valid,
-                rx.heading(f"Welcome back {GlobalState.user.name}"),
-                GoogleOAuthProvider.create(
-                    GoogleLogin.create(on_success=GlobalState.on_success),
-                    client_id=GOOGLE_CLIENT_ID,
-                ),
-            ),
-            rx.heading("Your events", size="6"),
+            rx.heading("Events", size="6"),
             eventCard(),
             eventCard(),
             eventCard(),

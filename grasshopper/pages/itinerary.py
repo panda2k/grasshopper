@@ -1,7 +1,9 @@
 import reflex as rx
+from grasshopper.require_login import require_google_login
 from grasshopper.template import template
 
 @template
+@require_google_login
 def itinerary():
     return rx.center(
         rx.heading("Itinerary", size="9"),
