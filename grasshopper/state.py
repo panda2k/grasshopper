@@ -89,6 +89,37 @@ class GlobalState(rx.State):
             names.append(s.name)
         return names
 
+    @rx.var
+    def user_created_events(self) -> list[Event]:
+        if not self.user:
+            return []
+        with rx.session() as session:
+            query = select(Event).where(Event.author_id == self.user.id)
+            return list(session.exec(query).all())
+
+    @rx.var
+    def user_attended_events(self) -> list[Event]:
+        if not self.user:
+            return []
+        with rx.session() as session:
+            block_events = []
+            for event in self.user_blocks:
+                block_events.append(event.id)
+            query = select(Event).where(Event.id == self.user.id)
+            return list(session.exec(query).all())
+
+    @rx.var
+    def user_blocks(self) -> list[UserBlock]:
+        if not self.user:
+            return []
+        with rx.session() as session:
+            query = select(UserBlock).where(UserBlock.owner_id == self.user.id)
+            return list(session.exec(query))
+
+    @rx.var 
+    def count_user_blocks(self) -> int:
+        return len(self.user_blocks)
+
     @rx.cached_var
     def user(self) -> User | None:
         with rx.session() as session:

@@ -1,6 +1,7 @@
 import reflex as rx
 from grasshopper.template import template
 from grasshopper.require_login import require_google_login
+from grasshopper.state import GlobalState
 
 @template
 @require_google_login
@@ -9,10 +10,10 @@ def profile():
         rx.image(src="/profilepic.png", width="3em", padding="15px"),
         rx.vstack(
             rx.box(
-                rx.text("username", size="6"),
+                rx.text(GlobalState.user.name, size="6"),
             ),
             rx.box(
-                rx.text("5 friends • 3 events", size="2")
+                rx.text(f"5 friends • {GlobalState.count_user_blocks} events", size="2")
             ),
         ),
         rx.divider(),
