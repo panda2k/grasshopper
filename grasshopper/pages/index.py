@@ -57,7 +57,7 @@ def index() -> rx.Component:
         rx.vstack(
             rx.cond(
                 GlobalState.auth_session,
-                rx.heading(f"Welcome back {GlobalState.auth_session.user_id}"),
+                rx.heading(f"Welcome back {GlobalState.user.name}"),
                 GoogleOAuthProvider.create(
                     GoogleLogin.create(on_success=GlobalState.on_success),
                     client_id=GOOGLE_CLIENT_ID,

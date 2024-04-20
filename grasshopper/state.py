@@ -12,6 +12,7 @@ GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 
 class GlobalState(rx.State): 
     auth_session: None | AuthenticationSession = None
+    user: None | User = None
 
     def on_success(self, id_token: dict):
         auth_response = verify_oauth2_token(
@@ -33,15 +34,15 @@ class GlobalState(rx.State):
                     return user
                 
                 def create_session():
-                    session.expire_on_commit = False
                     new_auth_session = AuthenticationSession(user_id=user.id)
                     session.add(new_auth_session)
                     session.commit()
                     return new_auth_session
-
+                session.expire_on_commit = False
                 query = select(User).where(User.email == auth_response["email"])
                 results = session.exec(query).first()
                 user = results if results else create_user()
 
                 self.auth_session = create_session()
+                self.user = user
 
