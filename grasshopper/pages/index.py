@@ -1,6 +1,8 @@
 """The main index page."""
 
+import functools
 import reflex as rx
+from grasshopper.login import login
 from grasshopper.template import navbar, template
 
 from grasshopper.react_google_auth import GoogleLogin, GoogleOAuthProvider
@@ -9,17 +11,31 @@ from grasshopper.template import template
 import os
 from dotenv import load_dotenv
 
+# def require_google_login(page) -> rx.Component:
+#     @functools.wraps(page)
+#     def _auth_wrapper() -> rx.Component:
+#         return GoogleOAuthProvider.create(
+#             rx.cond(
+#                 GlobalState.is_hydrated,
+#                 rx.cond(
+#                     GlobalState.is_authenticated, 
+#                     page(), 
+#                     login(),
+#                 ),
+#                 rx.box(rx.text("Loading...")),
+#             ),
+#             client_id=GOOGLE_CLIENT_ID,
+#         )
+
+#     return _auth_wrapper
+
 # def eventCard(imageSrc, title, description, author, school):
 def eventCard():
     return rx.box(
                 (rx.box(
-                rx.image(src="https://via.placeholder.com/200x150",                style={
-                    "height": "70%",
-                    "width": "100%",
-                    "object-fit": "cover",
-                    "object-position": "center",
-                    "border-radius": "10px",
-                    "margin-bottom": "14px",
+                rx.image(src="https://acmucsd.s3.us-west-1.amazonaws.com/portal/events/46f1a42e-41e5-4103-8052-74d3e13d6a62.png",                
+                style={
+                    "height": "70%","width": "100%","object-fit": "cover","object-position": "center","border-radius": "10px","margin-bottom": "14px",
                 },
 ),
                 rx.flex(
@@ -36,17 +52,21 @@ def eventCard():
                                 ),
                                 type="always",
                                 scrollbars="vertical",
-                                style={"height": 40},
+                                style={"height": 55, },
                         ),
                     ),
-                    spacing="2",
+                    spacing="1",
                     height="100%",
+                    style={"margin-bottom":"10px"}
                 ),
             ),
             as_child=True,
         ))
-    , border_radius="10px",
-    style={"width":"100%", "padding":"14px", "margin":"10px", "box-shadow":"0 4px 8px 0 rgba(0,0,0,0.2)"})
+    # , border_radius="10px",
+    # style={"width":"100%", "padding":"14px", "margin":"10px", "box-shadow":"0 4px 8px 0 rgba(0,0,0,0.2)"})
+    ,
+    style={"width":"100%", "padding":"14px", "margin":"10px", "border-bottom":"1px solid #e0e0e0"},)
+
 
 
 load_dotenv()
@@ -55,6 +75,7 @@ GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 
 
 @template
+# @require_google_login
 def index() -> rx.Component:
     return rx.center(
         rx.vstack(
@@ -71,9 +92,11 @@ def index() -> rx.Component:
             eventCard(),
             eventCard(),
             eventCard(),
+            rx.text("This is the end of your events", weight="light", trim="normal",size="3",style={"margin-bottom":'10px'}),
             align="center",
             spacing="2",
             font_size="2em",
         ),
+        padding="1em",
         # height="100vh",
     )

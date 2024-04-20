@@ -42,5 +42,4 @@ def template(page: Callable[[], rx.Component]) -> rx.Component:
         page(),
         navbar(),
         padding_bottom="4em",
-        padding="1em",
     )

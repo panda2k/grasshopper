@@ -74,6 +74,28 @@ class GlobalState(rx.State):
             print(f"Error verifying token: {exc}")
         return {}
 
+    is_attending: bool = False
+
+    def toggle_text(self):
+        """An event handler to toggle between "Attend" and "Attending"."""
+        # Event handlers can modify the base var.
+        # Here we reference the base var `is_attending`.
+        self.is_attending = not self.is_attending
+
+    @rx.var
+    def button_text(self) -> str:
+        """A computed var that returns the current button text."""
+        # Computed var returns "Attend" if is_attending is False, otherwise returns "Attending".
+        return "Attending" if self.is_attending else "Attend"
+
+
+    # @rx.var
+    # def user_id(self) -> str:
+    #     return self.router.page.params.get("userID", "no userID")
+    
+    def is_authenticated(self) -> bool:
+        return bool(self.auth_session)
+
     def on_success(self, id_token: dict):
         auth_response = verify_oauth2_token(
             id_token["credential"],
