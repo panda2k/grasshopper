@@ -3,11 +3,7 @@
 import reflex as rx
 from grasshopper.template import template
 
-from grasshopper.react_google_auth import GoogleLogin, GoogleOAuthProvider
-from grasshopper.state import GlobalState
 from grasshopper.template import template
-import os
-from dotenv import load_dotenv
 
 # def eventCard(imageSrc, title, description, author, school):
 def eventCard():
@@ -72,13 +68,6 @@ def eventCard():
         ),
         style={"width":"100%", "margin":"10px"},
     )
-
-
-
-load_dotenv()
-
-GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
-
 
 @template
 # @require_google_login
