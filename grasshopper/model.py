@@ -15,8 +15,8 @@ class Event(rx.Model, table=True):
     title: str
     description: str
     image: str | None = Field(default=None)
-    school_id: int = Field(foreign_key="school.id")
-    author_id: int = Field(foreign_key="user.id")
+    school_id: str = Field(foreign_key="school.id")
+    author_id: str = Field(foreign_key="user.id")
 
 class School(rx.Model, table=True):
     id: str = Field(
@@ -51,9 +51,9 @@ class UserBlock(rx.Model, table=True):
         primary_key=True,
         nullable=False,
     )
-    block_id: int = Field(foreign_key="block.id")
-    owner_id: int = Field(foreign_key="user.id")
-    event_id: int = Field(foreign_key="event.id")
+    block_id: str = Field(foreign_key="block.id")
+    owner_id: str = Field(foreign_key="user.id")
+    event_id: str = Field(foreign_key="event.id")
     acquired_date: datetime = Field(default=datetime.now(timezone.utc))
 
 class AuthenticationSession(rx.Model, table=True):
@@ -62,5 +62,6 @@ class AuthenticationSession(rx.Model, table=True):
         primary_key=True,
         nullable=False,
     )
+    credential: str 
     user_id: str = Field(foreign_key="user.id")
 
