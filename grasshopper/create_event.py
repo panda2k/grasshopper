@@ -34,7 +34,7 @@ def create_event():
                                 placeholder="School",
                                 name="school",
                                 required=True,
-                                items=["UCSD", "UCI"],
+                                items=GlobalState.school_names,
                             ),
                             rx.button("Create", type="submit"),
                         ),

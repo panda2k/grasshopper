@@ -5,7 +5,7 @@ from google.oauth2.id_token import verify_oauth2_token
 import reflex as rx
 from reflex.base import os
 from sqlmodel import select
-from grasshopper.model import AuthenticationSession, Event, User
+from grasshopper.model import AuthenticationSession, Event, School, User
 
 load_dotenv()
 
@@ -16,12 +16,8 @@ class GlobalState(rx.State):
 
     def create_event(self, form_data: dict):
         """Handle the form submit."""
-        schools: Dict[str, str] = {
-            "UCSD": "1234",
-            "UCI": "5678"
-        }
         with rx.session() as session:
-            school_id = schools[form_data["school"]]
+            school_id = self.schools[self.school_names.index(form_data["school"])].id
             event = Event(
                 title=form_data["title"],
                 description=form_data["description"],
@@ -41,6 +37,19 @@ class GlobalState(rx.State):
             )
         except Exception:
             return False
+
+    @rx.cached_var
+    def schools(self) -> list[School]:
+        with rx.session() as session:
+            query = select(School)
+            return list(session.exec(query).all())
+
+    @rx.var 
+    def school_names(self) -> list[str]:
+        names = []
+        for s in self.schools:
+            names.append(s.name)
+        return names
 
     @rx.cached_var
     def user(self) -> User | None:
