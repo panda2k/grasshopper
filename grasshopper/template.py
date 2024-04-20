@@ -20,14 +20,14 @@ def navbar() -> rx.Component:
                 create_event(),
                 rx.flex()
             ),
-            rx.link(rx.icon("bar-chart", href="/leaderboard", color="white")),
+            rx.link(rx.icon("bar-chart"), href="/private-leaderboard", color="white"),
             rx.link(rx.icon("circle-user"), href="/profile",color="white"),
             spacing="3",
             justify="center",
             align="center",
             justify_content="space-evenly",
         ),
-        padding="1em",
+        padding="10px",
         background_color="#121212",
         color="white",
         position="fixed",
@@ -43,5 +43,5 @@ def template(page: Callable[[], rx.Component]) -> rx.Component:
         page(),
         navbar(),
         padding_bottom="4em",
-        padding="1em",
+        padding="2em",
     )

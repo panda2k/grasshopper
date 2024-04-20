@@ -8,6 +8,7 @@ import { BarChartIcon as LucideBarChartIcon, CalendarClockIcon as LucideCalendar
 import { keyframes } from "@emotion/react"
 import { Box as RadixThemesBox, Button as RadixThemesButton, Dialog as RadixThemesDialog, Flex as RadixThemesFlex, Heading as RadixThemesHeading, Link as RadixThemesLink, ScrollArea as RadixThemesScrollArea, Select as RadixThemesSelect, Text as RadixThemesText, TextField as RadixThemesTextField, Theme as RadixThemesTheme } from "@radix-ui/themes"
 import env from "/env.json"
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google"
 import NextLink from "next/link"
 import { Drawer as VaulDrawer } from "vaul"
 import "@radix-ui/themes/styles.css"
@@ -17,65 +18,7 @@ import NextHead from "next/head"
 
 
 
-export function Fragment_6499b51736be44284c15de43340cb16c () {
-  const [addEvents, connectErrors] = useContext(EventLoopContext);
-
-
-
-  return (
-    <Fragment>
-  {isTrue(connectErrors.length >= 2) ? (
-  <Fragment>
-  <RadixThemesDialog.Root css={{"zIndex": 9999}} open={connectErrors.length >= 2}>
-  <RadixThemesDialog.Content>
-  <RadixThemesDialog.Title>
-  {`Connection Error`}
-</RadixThemesDialog.Title>
-  <RadixThemesText as={`p`}>
-  {`Cannot connect to server: `}
-  {(connectErrors.length > 0) ? connectErrors[connectErrors.length - 1].message : ''}
-  {`. Check if server is reachable at `}
-  {getBackendURL(env.EVENT).href}
-</RadixThemesText>
-</RadixThemesDialog.Content>
-</RadixThemesDialog.Root>
-</Fragment>
-) : (
-  <Fragment/>
-)}
-</Fragment>
-  )
-}
-
-export function Fragment_cb5edf864ed730e6ef1545318d0da5a2 () {
-  const [addEvents, connectErrors] = useContext(EventLoopContext);
-
-
-
-  return (
-    <Fragment>
-  {isTrue(connectErrors.length > 0) ? (
-  <Fragment>
-  <LucideWifiOffIcon css={{"color": "crimson", "zIndex": 9999, "position": "fixed", "bottom": "30px", "right": "30px", "animation": `${pulse} 1s infinite`}} size={32}/>
-</Fragment>
-) : (
-  <Fragment/>
-)}
-</Fragment>
-  )
-}
-
-const pulse = keyframes`
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-`
-
-
-export function Fragment_e4189cc831f29355b3c1176b62dd13e8 () {
+export function Fragment_dfb70d9b692eaec1da81b9025953f545 () {
   const state__global_state = useContext(StateContexts.state__global_state)
   const [addEvents, connectErrors] = useContext(EventLoopContext);
 
@@ -136,8 +79,6 @@ export function Fragment_e4189cc831f29355b3c1176b62dd13e8 () {
 </RadixThemesSelect.Group>
 </RadixThemesSelect.Content>
 </RadixThemesSelect.Root>
-  <RadixThemesTextField.Input name={`location`} placeholder={`Location`} required={true}/>
-  <RadixThemesTextField.Input min={`2024-04-20TApr:09`} name={`time`} type={`datetime-local`}/>
   <RadixThemesButton type={`submit`}>
   {`Create`}
 </RadixThemesButton>
@@ -158,6 +99,89 @@ export function Fragment_e4189cc831f29355b3c1176b62dd13e8 () {
   )
 }
 
+export function Fragment_6499b51736be44284c15de43340cb16c () {
+  const [addEvents, connectErrors] = useContext(EventLoopContext);
+
+
+
+  return (
+    <Fragment>
+  {isTrue(connectErrors.length >= 2) ? (
+  <Fragment>
+  <RadixThemesDialog.Root css={{"zIndex": 9999}} open={connectErrors.length >= 2}>
+  <RadixThemesDialog.Content>
+  <RadixThemesDialog.Title>
+  {`Connection Error`}
+</RadixThemesDialog.Title>
+  <RadixThemesText as={`p`}>
+  {`Cannot connect to server: `}
+  {(connectErrors.length > 0) ? connectErrors[connectErrors.length - 1].message : ''}
+  {`. Check if server is reachable at `}
+  {getBackendURL(env.EVENT).href}
+</RadixThemesText>
+</RadixThemesDialog.Content>
+</RadixThemesDialog.Root>
+</Fragment>
+) : (
+  <Fragment/>
+)}
+</Fragment>
+  )
+}
+
+export function Fragment_b2a0a9d55dc55ed7c8d24a1c108a048e () {
+  const state__global_state = useContext(StateContexts.state__global_state)
+  const [addEvents, connectErrors] = useContext(EventLoopContext);
+
+
+
+  return (
+    <Fragment>
+  {isTrue(state__global_state.token_is_valid) ? (
+  <Fragment>
+  <RadixThemesHeading>
+  {`Welcome back ${state__global_state.user?.name}`}
+</RadixThemesHeading>
+</Fragment>
+) : (
+  <Fragment>
+  <GoogleOAuthProvider clientId={`895796536559-cvh6m7jpgitfvvuiv5kindnm3p4n1d15.apps.googleusercontent.com`}>
+  <GoogleLogin onSuccess={(_data) => addEvents([Event("state.global_state.on_success", {id_token:_data})], (_data), {})}/>
+</GoogleOAuthProvider>
+</Fragment>
+)}
+</Fragment>
+  )
+}
+
+const pulse = keyframes`
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+`
+
+
+export function Fragment_cb5edf864ed730e6ef1545318d0da5a2 () {
+  const [addEvents, connectErrors] = useContext(EventLoopContext);
+
+
+
+  return (
+    <Fragment>
+  {isTrue(connectErrors.length > 0) ? (
+  <Fragment>
+  <LucideWifiOffIcon css={{"color": "crimson", "zIndex": 9999, "position": "fixed", "bottom": "30px", "right": "30px", "animation": `${pulse} 1s infinite`}} size={32}/>
+</Fragment>
+) : (
+  <Fragment/>
+)}
+</Fragment>
+  )
+}
+
 export default function Component() {
 
   return (
@@ -168,11 +192,12 @@ export default function Component() {
 </div>
   <Fragment_6499b51736be44284c15de43340cb16c/>
 </Fragment>
-  <RadixThemesBox css={{"paddingBottom": "4em", "padding": "1em"}}>
+  <RadixThemesBox css={{"paddingBottom": "4em", "padding": "2em"}}>
   <RadixThemesFlex css={{"padding": "1em", "display": "flex", "alignItems": "center", "justifyContent": "center"}}>
   <RadixThemesFlex align={`center`} css={{"fontSize": "2em"}} direction={`column`} gap={`2`}>
+  <Fragment_b2a0a9d55dc55ed7c8d24a1c108a048e/>
   <RadixThemesHeading size={`6`}>
-  {`Events`}
+  {`Your events`}
 </RadixThemesHeading>
   <RadixThemesBox css={{"width": "100%", "padding": "14px", "margin": "10px", "border-bottom": "1px solid #e0e0e0"}}>
   <RadixThemesBox css={{"asChild": true}}>
@@ -279,7 +304,7 @@ export default function Component() {
 </RadixThemesText>
 </RadixThemesFlex>
 </RadixThemesFlex>
-  <RadixThemesBox css={{"padding": "1em", "backgroundColor": "#121212", "color": "white", "position": "fixed", "bottom": "0", "left": "0", "width": "100%"}}>
+  <RadixThemesBox css={{"padding": "10px", "backgroundColor": "#121212", "color": "white", "position": "fixed", "bottom": "0", "left": "0", "width": "100%"}}>
   <RadixThemesFlex align={`center`} css={{"justifyContent": "space-evenly"}} justify={`center`} gap={`3`}>
   <RadixThemesLink asChild={true} css={{"color": "white"}}>
   <NextLink href={`/`} passHref={true}>
@@ -291,9 +316,11 @@ export default function Component() {
   <LucideCalendarClockIcon css={{"color": "var(--current-color)"}}/>
 </NextLink>
 </RadixThemesLink>
-  <Fragment_e4189cc831f29355b3c1176b62dd13e8/>
-  <RadixThemesLink>
-  <LucideBarChartIcon css={{"color": "white", "href": "/leaderboard"}}/>
+  <Fragment_dfb70d9b692eaec1da81b9025953f545/>
+  <RadixThemesLink asChild={true} css={{"color": "white"}}>
+  <NextLink href={`/private-leaderboard`} passHref={true}>
+  <LucideBarChartIcon css={{"color": "var(--current-color)"}}/>
+</NextLink>
 </RadixThemesLink>
   <RadixThemesLink asChild={true} css={{"color": "white"}}>
   <NextLink href={`/profile`} passHref={true}>
