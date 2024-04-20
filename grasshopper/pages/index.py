@@ -1,6 +1,8 @@
 """The main index page."""
 
 import reflex as rx
+from grasshopper.template import template
+
 
 @template
 def index() -> rx.Component:

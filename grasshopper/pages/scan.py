@@ -1,4 +1,6 @@
 import reflex as rx
+from grasshopper.template import template
+
 
 @template
 def scan():
