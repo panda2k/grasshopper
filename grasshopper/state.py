@@ -1,4 +1,5 @@
-import time 
+import time
+import datetime 
 from dotenv import load_dotenv
 from google.auth.transport import requests
 from google.oauth2.id_token import verify_oauth2_token
@@ -21,6 +22,8 @@ class GlobalState(rx.State):
             event = Event(
                 title=form_data["title"],
                 description=form_data["description"],
+                location=form_data["location"],
+                time=datetime.datetime.strptime(form_data["time"], "%Y-%m-%dT%H:%M"),
                 school_id=school_id, 
                 author_id=self.user.id
             )

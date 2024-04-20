@@ -15,6 +15,8 @@ class Event(rx.Model, table=True):
     title: str
     description: str
     image: str | None = Field(default=None)
+    location: str
+    time: datetime = Field()
     school_id: str = Field(foreign_key="school.id")
     author_id: str = Field(foreign_key="user.id")
 

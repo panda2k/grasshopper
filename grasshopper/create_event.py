@@ -1,3 +1,4 @@
+from datetime import datetime
 import reflex as rx
 from grasshopper.state import GlobalState
 
@@ -35,6 +36,17 @@ def create_event():
                                 name="school",
                                 required=True,
                                 items=GlobalState.school_names,
+                            ),
+                            rx.input(
+                                placeholder="Location",
+                                name="location",
+                                required=True
+                            ),
+                            # add a note here to make them set the date and time in PST
+                            rx.input(
+                                type="datetime-local",
+                                name="time",
+                                min=f"{datetime.now().strftime('%Y-%m-%dT%h:%M')}"
                             ),
                             rx.button("Create", type="submit"),
                         ),
