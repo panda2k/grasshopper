@@ -8,7 +8,7 @@ def global_leaderboard():
         rx.vstack(
             rx.center(
                 rx.box(
-                    rx.heading("private leaderboard", align="center"),
+                    rx.heading("global leaderboard", align="center"),
                     width="100%",
                 ),
                 width="100%",
