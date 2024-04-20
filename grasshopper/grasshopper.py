@@ -1,8 +1,5 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 
-import os
-
-from reflex.event import redirect
 from rxconfig import config
 
 import reflex as rx
@@ -26,7 +23,6 @@ def user():
     return rx.heading(State.user_id)
 
 app = rx.App()
-app.add_page(index, route="/",title="My Beautiful App")
+app.add_page(index, route="/",title="Grasshopper")
 app.add_page(profile, route="/profile",title="Profile")
-app.add_page(profile, route="/createevent",title="Create Event")
 app.add_page(profile, route="/leaderboard",title="Leaderboard")
