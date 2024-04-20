@@ -11,6 +11,8 @@ from grasshopper.pages.profile import profile
 from grasshopper.pages.uniquePage import uniquePage
 from grasshopper.pages.attend import attend
 from grasshopper.pages.itinerary import itinerary
+from grasshopper.pages.private_leaderboard import private_leaderboard
+from grasshopper.pages.global_leaderboard import global_leaderboard
 
 
 docs_url = "https://reflex.dev/docs/getting-started/introduction/"
@@ -44,4 +46,7 @@ app.add_page(uniquePage, route="/uniquePage",title="Profile")
 app.add_page(attend, route="/attend",title="Profile")
 app.add_page(profile, route="/leaderboard",title="Leaderboard")
 app.add_page(itinerary, route="/itinerary", title="Itinerary")
+# app.add_page(create, route="/create",title="Create Event")
+app.add_page(private_leaderboard, route="/private-leaderboard",title="Private Leaderboard")
+app.add_page(global_leaderboard, route="/global-leaderboard",title="Global Leaderboard")
 
