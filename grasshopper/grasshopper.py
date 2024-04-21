@@ -34,4 +34,3 @@ app.add_page(profile, route="/leaderboard", title="Leaderboard")
 app.add_page(itinerary, route="/itinerary", title="Itinerary")
 app.add_page(private_leaderboard, route="/private-leaderboard", title="Private Leaderboard")
 app.add_page(global_leaderboard, route="/global-leaderboard", title="Global Leaderboard")
-
