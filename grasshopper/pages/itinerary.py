@@ -98,7 +98,7 @@ def itinerary():
         action_bar(),
         rx.cond(
             ItineraryState.button_clicked,
-            rx.stack(*map(lambda i: itineraryJSON(i), jsonArray)),
+            rx.vstack(*map(lambda i: itineraryJSON(i), jsonArray)),
             rx.box()
         ),
         align="center",
