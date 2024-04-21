@@ -1,4 +1,5 @@
 import reflex as rx
+from grasshopper.pages.index import event_card
 from grasshopper.template import template
 from grasshopper.require_login import require_google_login
 from grasshopper.state import GlobalState
@@ -30,18 +31,39 @@ def profile():
             justify="center"
         ),
         rx.divider(),
-        rx.container(
-            rx.center(
-                rx.text("saved", size="4"),
-                rx.text("attended", size="4"),
-                rx.text("host", size="4"),
-                align="center",
-                spacing="7",
-                padding="15px"
+        rx.center(
+            rx.tabs.root(
+                rx.tabs.list(
+                    rx.tabs.trigger("saved", value="saved"),
+                    rx.tabs.trigger("attended", value="attended"),
+                    rx.tabs.trigger("hosted", value="hosted"),
+                    size="2",
+                ),
+                rx.tabs.content(
+                    rx.text("item on tab 1"),
+                    value="saved",
+                ),
+                rx.tabs.content(
+                    rx.box(
+                        rx.foreach(
+                            GlobalState.user_attended_events,
+                            event_card
+                        ),
+                    ),
+                    value="attended",
+                ),
+                rx.tabs.content(
+                    rx.box(
+                        rx.foreach(
+                            GlobalState.user_created_events,
+                            event_card
+                        ),
+                    ),
+                    value="hosted",
+                ),
+                default_value="attended"
             ),
-            rx.box(
-                rx.text("add cards similar to home screen", size="3")
-            ),
+            width="100%"
         ),
         align="center",
         spacing="2",

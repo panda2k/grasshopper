@@ -1,3 +1,4 @@
+import json
 import time
 import datetime 
 from dotenv import load_dotenv
@@ -5,8 +6,8 @@ from google.auth.transport import requests
 from google.oauth2.id_token import verify_oauth2_token
 import reflex as rx
 from reflex.base import os
-from sqlmodel import select
-from grasshopper.model import AuthenticationSession, Event, School, User, UserBlock
+from sqlmodel import select, or_
+from grasshopper.model import AuthenticationSession, Event, School, User, UserBlock, EventData, UserData, SchoolData, EventDataTuple
 
 load_dotenv()
 
@@ -90,23 +91,73 @@ class GlobalState(rx.State):
         return names
 
     @rx.var
-    def user_created_events(self) -> list[Event]:
+    def user_created_events(self) -> list[EventDataTuple]:
         if not self.user:
             return []
+
         with rx.session() as session:
-            query = select(Event).where(Event.author_id == self.user.id)
-            return list(session.exec(query).all())
+            query = select(Event, User, School).join(User).join(School).where(Event.author_id == self.user.id)
+            results = session.exec(query).all()
+            events = []
+            for event, user, school in results:
+                # events.append(event)
+                event_data = EventData(
+                    description=event.description,
+                    event_id=event.id,
+                    location=event.location,
+                    school_id=event.school_id,
+                    title=event.title,
+                    time=event.time.strftime("%b %d, %Y @ %-I %p"),
+                    author_id=event.author_id
+                )
+                user_data = UserData(
+                    user_name=user.name,
+                    image=user.image,
+                    user_id=user.id,
+                    email=user.email
+                )
+                school_data = SchoolData(
+                    school_name=school.name,
+                    school_id=school.id
+                )
+                events.append((json.loads(event_data.toJSON()), json.loads(user_data.toJSON()), json.loads(school_data.toJSON())))
+            return events
 
     @rx.var
-    def user_attended_events(self) -> list[Event]:
+    def user_attended_events(self) -> list[EventDataTuple]:
         if not self.user:
             return []
         with rx.session() as session:
             block_events = []
-            for event in self.user_blocks:
-                block_events.append(event.id)
-            query = select(Event).where(Event.id == self.user.id)
-            return list(session.exec(query).all())
+            for block in self.user_blocks:
+                block_events.append(block.event_id)
+            query = select(Event, User, School).join(User).join(School).where(
+                or_(*map(lambda id: Event.id == id, block_events))
+            )
+            results = session.exec(query).all()
+            events = []
+            for event, user, school in results:
+                event_data = EventData(
+                    description=event.description,
+                    event_id=event.id,
+                    location=event.location,
+                    school_id=event.school_id,
+                    title=event.title,
+                    time=event.time.strftime("%b %d, %Y @ %-I %p"),
+                    author_id=event.author_id
+                )
+                user_data = UserData(
+                    user_name=user.name,
+                    image=user.image,
+                    user_id=user.id,
+                    email=user.email
+                )
+                school_data = SchoolData(
+                    school_name=school.name,
+                    school_id=school.id
+                )
+                events.append((json.loads(event_data.toJSON()), json.loads(user_data.toJSON()), json.loads(school_data.toJSON())))
+            return events
 
     @rx.var
     def user_blocks(self) -> list[UserBlock]:
