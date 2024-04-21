@@ -1,7 +1,10 @@
+import json
+from typing import Tuple
 import reflex as rx
 import uuid
 from sqlmodel import Field
 from datetime import datetime, timezone
+from dataclasses import dataclass
 
 def create_id():
     return str(uuid.uuid4())
@@ -67,3 +70,50 @@ class AuthenticationSession(rx.Model, table=True):
     credential: str 
     user_id: str = Field(foreign_key="user.id")
 
+@dataclass
+class EventData:
+    description: str
+    event_id: str
+    location: str
+    # image:str
+    school_id: int
+    title: str
+    time: str
+    author_id: str
+
+    def toJSON(self):
+        return json.dumps(
+            self,
+            default=lambda o: o.__dict__,
+            sort_keys=True,
+            indent=4)
+
+
+@dataclass
+class UserData:
+    user_name: str
+    image: str
+    user_id: str
+    email: str
+
+    def toJSON(self):
+        return json.dumps(
+            self,
+            default=lambda o: o.__dict__,
+            sort_keys=True,
+            indent=4)
+
+
+@dataclass
+class SchoolData:
+    school_name: str
+    school_id: str
+
+    def toJSON(self):
+        return json.dumps(
+            self,
+            default=lambda o: o.__dict__,
+            sort_keys=True,
+            indent=4)
+
+EventDataTuple = Tuple[dict, dict, dict]
