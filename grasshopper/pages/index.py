@@ -12,11 +12,24 @@ def event_card(event: EventDataTuple):
     return rx.vstack(
         rx.box(
             rx.box(
-                rx.image(
-                    src="https://acmucsd.s3.us-west-1.amazonaws.com/portal/events/46f1a42e-41e5-4103-8052-74d3e13d6a62.png",
+                rx.flex(
+                    rx.image(
+                        src="/blocks-stack.jpg",
+                        style={
+                            "width": "30%",
+                            "object-fit": "cover",
+                            "object-position": "center",
+                            "border-radius": "10px",
+                            "margin-bottom": "10px",
+                        },
+                    ),
+                    justify="center",
+                    background="#F1F1F1",
+                    width="100%",
                     style={
-                        "height": "70%","width": "100%","object-fit": "cover","object-position": "center","border-radius": "10px","margin-bottom": "10px",
-                    },
+                        "margin-bottom": "10px",
+                        "border-radius": "10px",
+                    }
                 ),
                 rx.flex(
                     rx.box(
@@ -77,10 +90,10 @@ def event_card(event: EventDataTuple):
     )
 
 class HomeState(rx.State):
-    @rx.cached_var
+    @rx.var
     def events(self) -> List[EventDataTuple]:
         with rx.session() as session:
-            query = select(Event, User, School).join(User).join(School)
+            query = select(Event, User, School).join(User).join(School).order_by(Event.time)
             results = session.exec(query).all()
             events = []
             for event, user, school in results:
