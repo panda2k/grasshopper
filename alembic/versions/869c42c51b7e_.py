@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: a6ae96bacbe0
-Revises: 489b20924d63
-Create Date: 2024-04-19 23:04:20.181874
+Revision ID: 869c42c51b7e
+Revises: 
+Create Date: 2024-04-21 04:00:37.629917
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 import sqlmodel
 
 # revision identifiers, used by Alembic.
-revision: str = 'a6ae96bacbe0'
-down_revision: Union[str, None] = '489b20924d63'
+revision: str = '869c42c51b7e'
+down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -40,6 +40,7 @@ def upgrade() -> None:
     )
     op.create_table('authenticationsession',
     sa.Column('id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('credential', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('user_id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -49,17 +50,19 @@ def upgrade() -> None:
     sa.Column('title', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('description', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('image', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-    sa.Column('school_id', sa.Integer(), nullable=False),
-    sa.Column('author_id', sa.Integer(), nullable=False),
+    sa.Column('location', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('time', sa.DateTime(), nullable=False),
+    sa.Column('school_id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('author_id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.ForeignKeyConstraint(['author_id'], ['user.id'], ),
     sa.ForeignKeyConstraint(['school_id'], ['school.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('userblock',
     sa.Column('id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('block_id', sa.Integer(), nullable=False),
-    sa.Column('owner_id', sa.Integer(), nullable=False),
-    sa.Column('event_id', sa.Integer(), nullable=False),
+    sa.Column('block_id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('owner_id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('event_id', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('acquired_date', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['block_id'], ['block.id'], ),
     sa.ForeignKeyConstraint(['event_id'], ['event.id'], ),
