@@ -34,7 +34,6 @@ def navbar() -> rx.Component:
         bottom="0",
         left="0",
         width="100%",
-
     )
 
 
