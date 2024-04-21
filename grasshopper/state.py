@@ -131,6 +131,8 @@ class GlobalState(rx.State):
             block_events = []
             for block in self.user_blocks:
                 block_events.append(block.event_id)
+            if not len(block_events):
+                return []
             query = select(Event, User, School).join(User).join(School).where(
                 or_(*map(lambda id: Event.id == id, block_events))
             )
@@ -227,6 +229,7 @@ class GlobalState(rx.State):
             GOOGLE_CLIENT_ID,
             clock_skew_in_seconds=10
         )
+
         with rx.session() as session:
             def create_user(): 
                 user = User(
@@ -238,9 +241,9 @@ class GlobalState(rx.State):
                 session.commit()
                 return user
             
-            def create_session():
+            def create_session(user_id):
                 new_auth_session = AuthenticationSession(
-                    user_id=user.id,
+                    user_id=user_id,
                     credential=id_token["credential"]
                 )
                 session.add(new_auth_session)
@@ -252,6 +255,6 @@ class GlobalState(rx.State):
             results = session.exec(query).first()
             user = results if results else create_user()
 
-            auth_session = create_session()
+            auth_session = create_session(user.id)
             self.session_id = auth_session.id
 
