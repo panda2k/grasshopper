@@ -17,7 +17,7 @@ def create_event():
                     rx.vstack(
                         rx.box(
                             rx.image(src="/blocks-stack.png", width="8em"),
-                            padding_top="1em",
+                            padding_top="3em",
                         ),
                         rx.box(
                             rx.heading("create event", align="center"),
@@ -34,7 +34,7 @@ def create_event():
                                     placeholder="title",
                                     name="title",
                                     required=True,
-                                    width="80%",
+                                    width="250px",
                                 ),
                                 width="100%",
                             ),
@@ -42,25 +42,29 @@ def create_event():
                                 placeholder="description",
                                 name="description",
                                 required=True,
+                                width="250px",
                             ),
                             rx.select(
                                 items=GlobalState.school_names,
                                 placeholder="school",
                                 name="school",
                                 required=True,
+                                width="250px",
                             ),
                             rx.input(
-                                placeholder="Location",
+                                placeholder="location",
                                 name="location",
-                                required=True
+                                required=True,
+                                width="250px",
                             ),
                             # add a note here to make them set the date and time in PST
                             rx.input(
                                 type="datetime-local",
                                 name="time",
-                                min=f"{datetime.now().strftime('%Y-%m-%dT%h:%M')}"
+                                min=f"{datetime.now().strftime('%Y-%m-%dT%h:%M')}",
+                                width="250px",
                             ),
-                            rx.button("create", type="submit", variant="soft"),
+                            rx.button("create!", type="submit", variant="soft"),
                             align="center",
                             gap="2em",
                             width="100%",
