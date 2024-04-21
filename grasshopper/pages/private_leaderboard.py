@@ -60,7 +60,7 @@ class LeaderboardState(rx.State):
 def leaderboard_component(userBlock: UserBlockTuple):
     return rx.center(
         rx.box(
-            rx.image(src=userBlock[0]["image"], width="3em"),
+            rx.image(src="/profilepic.png", width="3em"),
             width="15%",
         ),
         rx.box(
