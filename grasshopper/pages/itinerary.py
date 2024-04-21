@@ -59,7 +59,29 @@ def itineraryJSON(jsonObj: dict):    #example jsonObj"title":"Intro to Python Wo
 def jsonArrayContainer(rxObj):
     return rx.box(rxObj)
 
-jsonArray: list[dict]=[{"title":"Intro to Python Workshop","school_name":"UC San Diego","description":"Learn the basics of Python programming in a beginner-friendly environment.","location":"Rady","time":"2024-05-02 18:00:00"},{"title":"Cybersecurity Seminar","school_name":"UC San Diego","description":"Explore the latest trends and challenges in cybersecurity.","location":"Rady","time":"2024-05-10 19:30:00"},{"title":"Data Science Panel","school_name":"UC San Diego","description":"Hear from industry experts about careers in data science.","location":"Rady","time":"2024-05-15 18:30:00"}]
+jsonArray: list[dict]=[
+    {
+        "title":"Intro to Python Workshop",
+        "school_name":"UC San Diego",
+        "description":"Learn the basics of Python programming in a beginner-friendly environment.",
+        "location":"Rady",
+        "time":"May 2, 2024 @ 6:00PM"
+    },
+    {
+        "title":"Cybersecurity Seminar",
+        "school_name":"UC San Diego",
+        "description":"Explore the latest trends and challenges in cybersecurity.",
+        "location":"Rady",
+        "time":"May 10, 2024 @ 7:30PM"
+    },
+    {
+        "title":"Data Science Panel",
+         "school_name":"UC San Diego",
+         "description":"Hear from industry experts about careers in data science.",
+         "location":"Rady",
+         "time":"May 15, 2024 @ 8:00AM"
+    }
+]
 
 @template
 @require_google_login

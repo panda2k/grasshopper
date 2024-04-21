@@ -107,7 +107,7 @@ class GlobalState(rx.State):
                     location=event.location,
                     school_id=event.school_id,
                     title=event.title,
-                    time=event.time.strftime("%b %d, %Y @ %-I %p"),
+                    time=event.time.strftime("%b %d, %Y @ %-I:%M %p"),
                     author_id=event.author_id
                 )
                 user_data = UserData(
@@ -143,7 +143,7 @@ class GlobalState(rx.State):
                     location=event.location,
                     school_id=event.school_id,
                     title=event.title,
-                    time=event.time.strftime("%b %d, %Y @ %-I %p"),
+                    time=event.time.strftime("%b %d, %Y @ %-I:%M %p"),
                     author_id=event.author_id
                 )
                 user_data = UserData(
