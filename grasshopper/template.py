@@ -18,7 +18,7 @@ def navbar() -> rx.Component:
             rx.cond(
                 GlobalState.token_is_valid,
                 create_event(),
-                rx.flex()
+                rx.button(rx.icon("circle-plus"), disabled=True),
             ),
             rx.link(rx.icon("bar-chart"), href="/private-leaderboard", color="white"),
             rx.link(rx.icon("circle-user"), href="/profile",color="white"),
