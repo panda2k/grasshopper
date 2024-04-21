@@ -21,12 +21,32 @@ class GlobalState(rx.State):
         return self.router.page.params.get("id", "no id")
 
     @rx.var 
-    def event(self) -> Event | None:
+    def event(self) -> EventDataTuple:
         if self.page_id == "no id":
-            return None
+            return ()
         with rx.session() as session:
-            query = select(Event).where(Event.id == self.page_id)
-            return session.exec(query).one()
+            query = select(Event, User, School).join(User).join(School).where(Event.id == self.page_id)
+            event, user, school = session.exec(query).one()
+            event_data = EventData(
+                description=event.description,
+                event_id=event.id,
+                location=event.location,
+                school_id=event.school_id,
+                title=event.title,
+                time=event.time.strftime("%b %d, %Y @ %-I:%M %p"),
+                author_id=event.author_id
+            )
+            user_data = UserData(
+                user_name=user.name,
+                image=user.image,
+                user_id=user.id,
+                email=user.email
+            )
+            school_data = SchoolData(
+                school_name=school.name,
+                school_id=school.id
+            )
+            return (json.loads(event_data.toJSON()), json.loads(user_data.toJSON()), json.loads(school_data.toJSON()))
 
     def check_in(self): 
         with rx.session() as session:
