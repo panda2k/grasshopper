@@ -6,7 +6,7 @@ from google.oauth2.id_token import verify_oauth2_token
 import reflex as rx
 from reflex.base import os
 from sqlmodel import select
-from grasshopper.model import AuthenticationSession, Event, School, User
+from grasshopper.model import AuthenticationSession, Event, School, User, UserBlock
 
 load_dotenv()
 
@@ -14,6 +14,41 @@ GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 
 class GlobalState(rx.State): 
     session_id: str = rx.Cookie(name="session_id", max_age=3600)
+
+    @rx.var
+    def page_id(self) -> str:
+        return self.router.page.params.get("id", "no id")
+
+    @rx.var 
+    def event(self) -> Event | None:
+        if self.page_id == "no id":
+            return None
+        with rx.session() as session:
+            query = select(Event).where(Event.id == self.page_id)
+            return session.exec(query).one()
+
+    def check_in(self): 
+        with rx.session() as session:
+            block = UserBlock(
+                owner_id=self.user.id,
+                event_id=self.page_id,
+                block_id="1"
+            )
+            session.add(block)
+            session.commit()
+
+    @rx.var
+    def checked_in(self) -> bool:
+        if self.page_id == "no id" or not self.user:
+            return False 
+
+        with rx.session() as session:
+            query = select(UserBlock).where(
+                UserBlock.owner_id == self.user.id,
+                UserBlock.event_id == self.page_id
+            )
+            return session.exec(query).first() != None
+
 
     def create_event(self, form_data: dict):
         """Handle the form submit."""
@@ -99,11 +134,6 @@ class GlobalState(rx.State):
         """A computed var that returns the current button text."""
         # Computed var returns "Attend" if is_attending is False, otherwise returns "Attending".
         return "Attending" if self.is_attending else "Attend"
-
-
-    # @rx.var
-    # def user_id(self) -> str:
-    #     return self.router.page.params.get("userID", "no userID")
     
     def is_authenticated(self) -> bool:
         return bool(self.auth_session)
