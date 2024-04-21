@@ -13,6 +13,7 @@ def action_bar() -> rx.Component:
         ),
             rx.button(
                 "Ask",
+                on_click=ItineraryState.click_button
                 # on_click=State.answer,
                 # style=style.button_style,
             ),
@@ -83,13 +84,23 @@ jsonArray: list[dict]=[
     }
 ]
 
+class ItineraryState(rx.State):
+    button_clicked: bool = False 
+
+    def click_button(self):
+        self.button_clicked = True
+
 @template
 @require_google_login
 def itinerary():
     return rx.stack(
         rx.heading("itinerary maker"),
         action_bar(),
-        *map(lambda i: itineraryJSON(i), jsonArray),
+        rx.cond(
+            ItineraryState.button_clicked,
+            rx.stack(*map(lambda i: itineraryJSON(i), jsonArray)),
+            rx.box()
+        ),
         align="center",
         flex_direction="column",
         spacing="7",
